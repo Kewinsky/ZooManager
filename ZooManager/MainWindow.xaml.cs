@@ -260,21 +260,24 @@ namespace ZooManager
         {
             try
             {
-                string query = "delete from Animal where id = @AnimalId";
+                string query = "delete from ZooAnimal where ZooId = @ZooId and AnimalId = @AnimalId";
                 SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
-
                 sqlConnection.Open();
-                sqlCommand.Parameters.AddWithValue("@AnimalId", listZoos.SelectedValue);
+                sqlCommand.Parameters.AddWithValue("@ZooId", listZoos.SelectedValue);
+                sqlCommand.Parameters.AddWithValue("@AnimalId", listAssociatedAnimals.SelectedValue);
                 sqlCommand.ExecuteScalar();
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
+
             finally
             {
                 sqlConnection.Close();
                 ShowAllAnimals();
+                ShowAssociatedAnimals();
             }
         }
 
